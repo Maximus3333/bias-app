@@ -33,14 +33,13 @@ def openai():
     openai = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
     data = request.json
     prompt = data.get('prompt')
-    print(f'Prompt: {prompt}')
-    print(f'data: {data}')
+    print(f'Prompt: {10}')
     if not prompt:
         return jsonify({'error': 'Prompt is required'}), 400
 
     try:
-        response = openai.chat.completions.create(model="gpt-4o-mini", messages=[messages_for(prompt)])
-
+        response = openai.chat.completions.create(model="gpt-4o-mini", messages=messages_for(prompt))
+        print(f'Response: {response.choices[0].message.content}')
         return response.choices[0].message.content
     except requests.exceptions.RequestException as e:
         print(f'Error calling OpenAI API: {e}')
